@@ -24,16 +24,23 @@ public class PlayerMovement : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if(HP <= 0)
-        {
-            SceneManager.LoadScene(0);
-        }
         HpTxt.text = HP.ToString();
         moveH = Input.GetAxis("Horizontal") * moveSpeed;
         moveV = Input.GetAxis("Vertical") * moveSpeed;
         rb.velocity = new Vector2(moveH, moveV);
 
         Vector2 direction = new Vector2(moveH, moveV);
+    }
+    public void Damage(Vector3 enemyPos)
+    {
+        HP--;
+        Vector3 impulse = enemyPos - transform.position;
+        transform.Translate(-impulse * 1f);
+        if (HP <= 0)
+        {
+            SceneManager.LoadScene(0);
+            //Destroy(gameObject);
+        }
     }
 
     // Update is called once per frame

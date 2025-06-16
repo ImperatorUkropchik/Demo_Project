@@ -38,6 +38,7 @@ public class EnemyAIContr : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             collision.GetComponent<PlayerMovement>().Damage(transform.position);
+            Debug.Log("suf");
         }
     }
 

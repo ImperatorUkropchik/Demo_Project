@@ -23,7 +23,7 @@ public class Anima : MonoBehaviour
         while (nado == true)
         {
             tema.color = new Color(0f, 0f, 0f, temka);
-            temka -= 0.025f;
+            temka -= 0.0025f;
             if(temka <= 0f)
             {
                 StopCoroutine(Zatema());
@@ -33,7 +33,7 @@ public class Anima : MonoBehaviour
 
             }
 
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(0.01f);
         }
     }
     private IEnumerator CamAnima()

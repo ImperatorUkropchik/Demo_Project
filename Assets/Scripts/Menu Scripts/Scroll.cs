@@ -34,7 +34,7 @@ public class Scroll : MonoBehaviour
         img.transform.DORewind();
         img.transform.DOMoveX(1, 1.5f);
         pan.transform.DORewind();
-        pan.transform.DOMoveX(-8f, 1.5f);
+        pan.transform.DOMoveX(-7f, 1.5f);
         set.transform.DORewind();
         set.transform.DOMoveX(22f, 1.5f);
     }

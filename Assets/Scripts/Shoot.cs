@@ -43,4 +43,9 @@ public class Shoot : MonoBehaviour
         }
         txt.text = $"{bulAmount} / { maxBul}";
     }
+    public void Obnovka()
+    {
+        if (bulAmount > maxBul) maxBul = bulAmount;
+        txt.text = $"{bulAmount} / { maxBul}";
+    }
 }

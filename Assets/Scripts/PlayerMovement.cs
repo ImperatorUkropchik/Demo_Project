@@ -12,6 +12,9 @@ public class PlayerMovement : MonoBehaviour
     public Text CoinTxt;
     public Text HpTxt;
     public float HP;
+
+    private bool isConsolOpen = false;
+    public GameObject consol;
     // Start is called before the first frame update
     void Start()
     {
@@ -46,6 +49,18 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Slash))
+        {
+            if (isConsolOpen)
+            {
+                consol.SetActive(false);
+                isConsolOpen = !isConsolOpen;
+            }
+            else
+            {
+                consol.SetActive(true);
+                isConsolOpen = !isConsolOpen;
+            }
+        }
     }
 }

@@ -11,6 +11,7 @@ public class EnemyAIContr : MonoBehaviour
     public GameObject target;
     public float agrDist = 3f;
     public float Hp = 3f;
+    public bool canHitPlayer = true;
     private void FixedUpdate()
     {
         float dist = Vector2.Distance(transform.position, target.transform.position);
@@ -37,8 +38,10 @@ public class EnemyAIContr : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("Player"))
         {
-            collision.GetComponent<PlayerMovement>().Damage(transform.position);
-            Debug.Log("suf");
+            if(canHitPlayer == true)
+            {
+                collision.GetComponent<PlayerMovement>().Damage(transform.position);
+            }
         }
     }
 

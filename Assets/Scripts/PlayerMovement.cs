@@ -12,6 +12,9 @@ public class PlayerMovement : MonoBehaviour
     public Text CoinTxt;
     public Text HpTxt;
     public float HP;
+
+    private bool isConsolOpen = false;
+    public GameObject consol;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,10 +27,6 @@ public class PlayerMovement : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if(HP <= 0)
-        {
-            SceneManager.LoadScene(0);
-        }
         HpTxt.text = HP.ToString();
         moveH = Input.GetAxis("Horizontal") * moveSpeed;
         moveV = Input.GetAxis("Vertical") * moveSpeed;
@@ -35,10 +34,33 @@ public class PlayerMovement : MonoBehaviour
 
         Vector2 direction = new Vector2(moveH, moveV);
     }
+    public void Damage(Vector3 enemyPos)
+    {
+        HP--;
+        Vector3 impulse = enemyPos - transform.position;
+        transform.Translate(-impulse * 1f);
+        if (HP <= 0)
+        {
+            SceneManager.LoadScene(0);
+            //Destroy(gameObject);
+        }
+    }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Slash))
+        {
+            if (isConsolOpen)
+            {
+                consol.SetActive(false);
+                isConsolOpen = !isConsolOpen;
+            }
+            else
+            {
+                consol.SetActive(true);
+                isConsolOpen = !isConsolOpen;
+            }
+        }
     }
 }

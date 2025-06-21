@@ -14,7 +14,7 @@ public class CoinController : MonoBehaviour
     }
     private void Awake()
     {
-        txt = GetComponent<Text>();
+        //txt = GetComponent<Text>();
     }
 
     // Update is called once per frame

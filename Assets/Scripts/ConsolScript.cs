@@ -64,6 +64,7 @@ public class ConsolScript : MonoBehaviour
                 AppendToConsole($"<color=orange>{cmd.Name}</color>: {cmd.Description}");
                 inputField.text = "";
             }
+            ReactionToInput();
             return;
         }
         if (commandName == "volume")
@@ -80,6 +81,7 @@ public class ConsolScript : MonoBehaviour
             else
             {
                 AppendToConsole("Команда volume требует аргумент от 0 до 1. Пример: volume 0,5");
+                inputField.ActivateInputField();
             }
 
             return;
@@ -99,6 +101,7 @@ public class ConsolScript : MonoBehaviour
             else
             {
                 AppendToConsole("Команда add_bullets требует целые числа от 0. Пример: add_bullets 3");
+                inputField.ActivateInputField();
             }
 
             return;
@@ -110,12 +113,47 @@ public class ConsolScript : MonoBehaviour
                 AppendToConsole($"Значение godmode: {can}");
                 GameObject GO = GameObject.Find("Priga");
                 EnemyAIContr EAIC = GO.GetComponent<EnemyAIContr>();
-                if(can == 0) EAIC.canHitPlayer = true;
+                if (can == 0) EAIC.canHitPlayer = true;
                 else if (can == 1) EAIC.canHitPlayer = false;
                 else AppendToConsole("Команда godmode принимает только числа 0 и 1(1-вкл, 0-выкл). Пример: godmode 1");
                 ReactionToInput();
             }
-            else AppendToConsole("Команда godmode принимает только числа 0 и 1(1-вкл, 0-выкл). Пример: godmode 1");
+            else 
+            {
+                AppendToConsole("Команда godmode принимает только числа 0 и 1(1-вкл, 0-выкл). Пример: godmode 1");
+                inputField.ActivateInputField();
+            } 
+
+            return;
+        }
+        if (commandName == "noclip")
+        {
+            if (argument != null && float.TryParse(argument, out float can))
+            {
+                GameObject PL = GameObject.Find("Player");
+                PlayerMovement PM = PL.GetComponent<PlayerMovement>();
+                PolygonCollider2D PC2D = PL.GetComponent<PolygonCollider2D>();
+                if (can == 0) 
+                {
+                    PM.moveSpeed = 2f;
+                    PC2D.enabled = true;
+                    AppendToConsole($"Значение noclip: {can}");
+                }
+                else if (can == 1)
+                {
+                    PM.moveSpeed = 7.5f;
+                    PC2D.enabled = false;
+                    AppendToConsole($"Значение noclip: {can}");
+                }
+                else AppendToConsole("Команда noclip принимает только числа 0 и 1(1-вкл, 0-выкл). Пример: noclip 1");
+                ReactionToInput();
+            }
+            else
+            {
+                AppendToConsole("Команда noclip принимает только числа 0 и 1(1-вкл, 0-выкл). Пример: noclip 1");
+                inputField.ActivateInputField();
+            }
+
             return;
         }
 
@@ -154,7 +192,7 @@ public class ConsolScript : MonoBehaviour
         if (command == "restart")
         {
             AppendToConsole($"Command {command} executed");
-            SceneManager.LoadScene(1);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
     void AppendToConsole(string text)

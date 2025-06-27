@@ -12,14 +12,18 @@ public class PlayerMovement : MonoBehaviour
     public Text CoinTxt;
     public Text HpTxt;
     public float HP;
+    private bool playerCanMove = true;
 
     private bool isConsolOpen = false;
     public GameObject consol;
+    public WeaponData WD;
+
+    public Transform TochkaTP;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-
+        Debug.Log(WD.boolInfo);
     }
     private void Awake()
     {
@@ -28,11 +32,24 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         HpTxt.text = HP.ToString();
-        moveH = Input.GetAxis("Horizontal") * moveSpeed;
-        moveV = Input.GetAxis("Vertical") * moveSpeed;
-        rb.velocity = new Vector2(moveH, moveV);
-
-        Vector2 direction = new Vector2(moveH, moveV);
+        if (playerCanMove)
+        {
+            moveH = Input.GetAxis("Horizontal") * moveSpeed;
+            moveV = Input.GetAxis("Vertical") * moveSpeed;
+            rb.velocity = new Vector2(moveH, moveV);
+            Vector2 direction = new Vector2(moveH, moveV);
+        }
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            SceneManager.LoadScene(0);
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("teleporta"))
+        {
+            transform.position = TochkaTP.position;
+        }
     }
     public void Damage(Vector3 enemyPos)
     {
@@ -51,15 +68,22 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Slash))
         {
-            if (isConsolOpen)
+            if (WD.boolInfo == true)
             {
-                consol.SetActive(false);
-                isConsolOpen = !isConsolOpen;
-            }
-            else
-            {
-                consol.SetActive(true);
-                isConsolOpen = !isConsolOpen;
+                Debug.Log(WD.boolInfo);
+                if (isConsolOpen)
+                {
+                    consol.SetActive(false);
+                    isConsolOpen = !isConsolOpen;
+                    playerCanMove = !playerCanMove;
+                }
+                else
+                {
+                    consol.SetActive(true);
+                    isConsolOpen = !isConsolOpen;
+                    playerCanMove = !playerCanMove;
+                    rb.velocity = new Vector2(0, 0);
+                }
             }
         }
     }

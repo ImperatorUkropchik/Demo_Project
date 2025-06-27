@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class AudioContr : MonoBehaviour
 {
@@ -12,6 +13,9 @@ public class AudioContr : MonoBehaviour
     private float saveVol;
     static float saveVole;
     public float saveVolForGame;
+
+    public AudioClip[] AC;
+    public AudioSource AS;
     // Start is called before the first frame update
     void Start()
     {
@@ -45,5 +49,12 @@ public class AudioContr : MonoBehaviour
             slid.value = saveVol;
             iszvikl = false;
         }
+    }
+    public void OnSigma()
+    {
+        Debug.Log("huiii");
+        int maxSoundID = AC.Length;
+        int SoundID = Random.Range(0, maxSoundID);
+        AS.PlayOneShot(AC[SoundID]);
     }
 }

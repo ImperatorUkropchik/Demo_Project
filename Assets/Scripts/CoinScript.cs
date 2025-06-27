@@ -20,7 +20,7 @@ public class CoinScript : MonoBehaviour
     {
         if(collision.CompareTag("Player"))
         {
-            CC.coinsCount++;
+            CoinInfoData.coinsCount++;
             Destroy(gameObject);
         }
     }

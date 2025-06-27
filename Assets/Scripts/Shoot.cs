@@ -12,6 +12,7 @@ public class Shoot : MonoBehaviour
     public Text txt;
     public AudioSource AS;
     public AudioClip[] AC;
+    public int ammoAdd;
     void Start()
     {
         bulAmount = maxBul;
@@ -36,7 +37,7 @@ public class Shoot : MonoBehaviour
     }
     public void Obnov()
     {
-        bulAmount += 5;
+        bulAmount += ammoAdd;
         if(bulAmount > maxBul)
         {
             bulAmount = maxBul;
